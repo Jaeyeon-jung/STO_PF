@@ -1,36 +1,25 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## STO Project Forecaster (Initial Version)
 
-## Getting Started
+Next.js + Tailwind 기반의 부동산 개발 프로젝트 분석/시각화 플랫폼 초기 버전입니다.
 
-First, run the development server:
+### 실행 방법
 
 ```bash
+cd web
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+브라우저에서 `http://localhost:3000` 접속.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 핵심 기능
+- 홈: 검색창 + 6개 드롭다운, 실시간 프롬프트 미리보기, 검색 결과 목록
+- 프로젝트 상세: 가치 라인차트, 리스크 레이더차트, 4개 액션 버튼
+- 메뉴: Investment / Assets / Revenue 빈 페이지
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### API (Mock)
+- `POST /api/search` – 필터/프롬프트 입력 → 프로젝트 목록 반환
+- `GET /api/projects/:id` – 프로젝트 상세 조회
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 기술 스택
+- Next.js(App Router), TypeScript, TailwindCSS, Recharts
