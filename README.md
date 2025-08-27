@@ -1,6 +1,7 @@
 ## STO Project Forecaster (Initial Version)
 
 Next.js + Tailwind 기반의 부동산 개발 프로젝트 분석/시각화 플랫폼 초기 버전입니다.
+Cursor AI로 작성되었습니다.
 
 ### 실행 방법
 
