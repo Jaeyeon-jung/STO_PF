@@ -26,9 +26,9 @@ const projects = [
 
 export async function GET(
   _req: Request,
-  context: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
-  const id = context.params.id;
+  const { id } = await context.params;
   const project = projects.find((p) => p.id === id) || null;
   return NextResponse.json({ project });
 }

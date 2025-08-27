@@ -20,6 +20,14 @@ const assetClasses = ["전체", "토지", "오피스", "리테일", "주거"];
 const esgOptions = ["무관", "ESG 고", "ESG 중", "ESG 저"];
 const riskLevels = ["전체", "낮음", "중간", "높음"];
 
+type SearchResult = {
+  id: string;
+  name: string;
+  location: string;
+  estimatedValue: number;
+  riskSummary: string;
+};
+
 export default function Home() {
   const [filters, setFilters] = useState<Filters>({
     projectName: "",
@@ -30,7 +38,7 @@ export default function Home() {
     esg: esgOptions[0],
     risk: riskLevels[0],
   });
-  const [results, setResults] = useState<any[]>([]);
+  const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
 
   const prompt = useMemo(() => {
