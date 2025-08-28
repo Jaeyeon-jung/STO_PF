@@ -13,12 +13,12 @@ type Filters = {
   risk: string;
 };
 
-const regions = ["전체", "서울", "부산", "인천", "경기", "세종"];
-const sizes = ["전체", "소형", "중형", "대형"];
-const devTypes = ["전체", "주거", "상업", "복합", "물류"];
-const assetClasses = ["전체", "토지", "오피스", "리테일", "주거"];
-const esgOptions = ["무관", "ESG 고", "ESG 중", "ESG 저"];
-const riskLevels = ["전체", "낮음", "중간", "높음"];
+const regions = ["지역", "서울", "부산", "인천", "경기", "세종"];
+const sizes = ["규모", "소형", "중형", "대형"];
+const devTypes = ["개발유형", "주거", "상업", "복합", "물류"];
+const assetClasses = ["자산군", "토지", "오피스", "리테일", "주거"];
+const esgOptions = ["ESG기준", "ESG 고", "ESG 중", "ESG 저"];
+const riskLevels = ["리스크수준", "낮음", "중간", "높음"];
 
 type SearchResult = {
   id: string;
@@ -76,7 +76,7 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <input
             className="border rounded px-3 py-2"
-            placeholder="프로젝트명 입력"
+            placeholder="프로젝트명 또는 주소 입력"
             value={filters.projectName}
             onChange={(e) => setFilters({ ...filters, projectName: e.target.value })}
           />
