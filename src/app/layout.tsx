@@ -29,11 +29,12 @@ export default function RootLayout({
       >
         <header className="border-b bg-white">
           <div className="mx-auto max-w-7xl px-4 py-4 flex items-center justify-between">
-            <a href="/" className="font-semibold text-lg">STO Project Forecaster</a>
+            <a href="/" className="font-semibold text-lg">STO-PF 부동산 플랫폼</a>
             <nav className="space-x-4 text-sm">
-              <a className="hover:text-blue-600" href="/investment">Investment</a>
-              <a className="hover:text-blue-600" href="/assets">Assets</a>
-              <a className="hover:text-blue-600" href="/revenue">Revenue</a>
+              <a className="hover:text-blue-600" href="/investments">부동산 투자</a>
+              <a className="hover:text-blue-600" href="/ai-search">AI 검색</a>
+              <a className="hover:text-blue-600" href="/assets">자산 관리</a>
+              <a className="hover:text-blue-600" href="/revenue">수익 현황</a>
             </nav>
           </div>
         </header>

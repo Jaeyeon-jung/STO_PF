@@ -1,142 +1,112 @@
-"use client";
-
-import { useMemo, useState } from "react";
 import Link from "next/link";
 
-type Filters = {
-  projectName: string;
-  region: string;
-  size: string;
-  devType: string;
-  assetClass: string;
-  esg: string;
-  risk: string;
-};
-
-const regions = ["전체", "서울", "부산", "인천", "경기", "세종"];
-const sizes = ["전체", "소형", "중형", "대형"];
-const devTypes = ["전체", "주거", "상업", "복합", "물류"];
-const assetClasses = ["전체", "토지", "오피스", "리테일", "주거"];
-const esgOptions = ["무관", "ESG 고", "ESG 중", "ESG 저"];
-const riskLevels = ["전체", "낮음", "중간", "높음"];
-
 export default function Home() {
-  const [filters, setFilters] = useState<Filters>({
-    projectName: "",
-    region: regions[0],
-    size: sizes[0],
-    devType: devTypes[0],
-    assetClass: assetClasses[0],
-    esg: esgOptions[0],
-    risk: riskLevels[0],
-  });
-  const [results, setResults] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
-
-  const prompt = useMemo(() => {
-    const parts = [
-      `프로젝트명: ${filters.projectName || "(미입력)"}`,
-      `지역: ${filters.region}`,
-      `규모: ${filters.size}`,
-      `개발유형: ${filters.devType}`,
-      `자산군: ${filters.assetClass}`,
-      `ESG: ${filters.esg}`,
-      `리스크: ${filters.risk}`,
-    ];
-    return `부동산 개발 프로젝트 검색 및 분석 요약을 반환하세요. ${parts.join(", ")}`;
-  }, [filters]);
-
-  async function onSearch() {
-    setLoading(true);
-    try {
-      const res = await fetch(`/api/search`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ filters, prompt }),
-      });
-      const data = await res.json();
-      setResults(data.items || []);
-    } finally {
-      setLoading(false);
-    }
-  }
 
   return (
     <div className="space-y-6">
-      <div className="rounded-lg border bg-white p-6">
-        <h1 className="mb-4 text-2xl font-semibold">프로젝트 검색</h1>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <input
-            className="border rounded px-3 py-2"
-            placeholder="프로젝트명 입력"
-            value={filters.projectName}
-            onChange={(e) => setFilters({ ...filters, projectName: e.target.value })}
-          />
-          <select className="border rounded px-3 py-2" value={filters.region} onChange={(e) => setFilters({ ...filters, region: e.target.value })}>
-            {regions.map((r) => (
-              <option key={r}>{r}</option>
-            ))}
-          </select>
-          <select className="border rounded px-3 py-2" value={filters.size} onChange={(e) => setFilters({ ...filters, size: e.target.value })}>
-            {sizes.map((r) => (
-              <option key={r}>{r}</option>
-            ))}
-          </select>
-          <select className="border rounded px-3 py-2" value={filters.devType} onChange={(e) => setFilters({ ...filters, devType: e.target.value })}>
-            {devTypes.map((r) => (
-              <option key={r}>{r}</option>
-            ))}
-          </select>
-          <select className="border rounded px-3 py-2" value={filters.assetClass} onChange={(e) => setFilters({ ...filters, assetClass: e.target.value })}>
-            {assetClasses.map((r) => (
-              <option key={r}>{r}</option>
-            ))}
-          </select>
-          <select className="border rounded px-3 py-2" value={filters.esg} onChange={(e) => setFilters({ ...filters, esg: e.target.value })}>
-            {esgOptions.map((r) => (
-              <option key={r}>{r}</option>
-            ))}
-          </select>
-          <select className="border rounded px-3 py-2" value={filters.risk} onChange={(e) => setFilters({ ...filters, risk: e.target.value })}>
-            {riskLevels.map((r) => (
-              <option key={r}>{r}</option>
-            ))}
-          </select>
-        </div>
-        <div className="mt-4 flex items-center justify-between gap-4">
-          <div className="text-xs text-gray-600 flex-1 bg-gray-50 border rounded p-3">
-            <div className="font-medium text-gray-800 mb-1">자동 생성 프롬프트</div>
-            <div className="whitespace-pre-wrap break-words">{prompt}</div>
+      {/* STO-PF 부동산 투자 플랫폼 소개 */}
+      <div className="bg-gradient-to-r from-blue-600 to-green-600 text-white rounded-lg p-6 mb-6">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-2">🏢 STO-PF 부동산 투자 플랫폼</h2>
+          <p className="text-white mb-4">
+            부동산 개발 프로젝트를 토큰화하여 PF 구조로 투자하는 혁신적인 플랫폼
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div className="bg-white bg-opacity-20 rounded-lg p-4">
+              <div className="text-3xl mb-2">🏗️</div>
+              <div className="font-semibold text-gray-900">부동산 PF 토큰화</div>
+              <div className="text-gray-800 text-sm">대규모 개발사업을 소액 투자로</div>
+            </div>
+            <div className="bg-white bg-opacity-20 rounded-lg p-4">
+              <div className="text-3xl mb-2">📈</div>
+              <div className="font-semibold text-gray-900">5배 레버리지</div>
+              <div className="text-gray-800 text-sm">자기자본 20% + PF대출 80%</div>
+            </div>
+            <div className="bg-white bg-opacity-20 rounded-lg p-4">
+              <div className="text-3xl mb-2">💎</div>
+              <div className="font-semibold text-gray-900">투명한 수익분배</div>
+              <div className="text-gray-800 text-sm">임대·매각수익 블록체인 분배</div>
+            </div>
           </div>
-          <button
-            onClick={onSearch}
-            className="shrink-0 inline-flex items-center justify-center rounded bg-blue-600 hover:bg-blue-700 text-white px-4 py-2"
-            disabled={loading}
+
+          <Link 
+            href="/investments" 
+            className="bg-white text-blue-600 px-6 py-3 rounded-lg hover:bg-blue-50 transition-colors inline-block font-semibold"
           >
-            {loading ? "검색 중..." : "검색"}
-          </button>
+            부동산 PF 프로젝트 투자하기 →
+          </Link>
         </div>
       </div>
 
-      <div className="rounded-lg border bg-white p-6">
-        <h2 className="mb-4 text-lg font-semibold">검색 결과</h2>
-        {results.length === 0 ? (
-          <div className="text-sm text-gray-500">검색 결과가 없습니다.</div>
-        ) : (
-          <ul className="divide-y">
-            {results.map((item) => (
-              <li key={item.id} className="py-4 flex items-start justify-between gap-4">
-                <div>
-                  <div className="font-medium">{item.name}</div>
-                  <div className="text-xs text-gray-600">{item.location} · 예상가치 {item.estimatedValue.toLocaleString()}억</div>
-                  <div className="text-xs text-rose-600 mt-1">주요 리스크: {item.riskSummary}</div>
-                </div>
-                <Link className="text-blue-600 hover:underline text-sm" href={`/projects/${item.id}`}>상세 보기</Link>
-              </li>
-            ))}
-          </ul>
-        )}
+
+      {/* AI 강화 기능 소개 섹션 */}
+      <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg p-6">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-2">🤖 AI 강화 부동산 토큰 플랫폼</h2>
+          <p className="text-white mb-4">
+            체인링크 오라클 + 커스텀 데이터 + AI 분석을 결합한 혁신적인 투자 플랫폼
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div className="bg-white bg-opacity-20 rounded-lg p-4">
+              <div className="text-3xl mb-2">📊</div>
+              <div className="font-semibold text-gray-900">실시간 데이터</div>
+              <div className="text-gray-800 text-sm">체인링크 오라클을 통한 실시간 시장 데이터</div>
+            </div>
+            <div className="bg-white bg-opacity-20 rounded-lg p-4">
+              <div className="text-3xl mb-2">🏗️</div>
+              <div className="font-semibold text-gray-900">커스텀 메트릭</div>
+              <div className="text-gray-800 text-sm">지역 수요, 개발 진행률, 인프라 점수</div>
+            </div>
+            <div className="bg-white bg-opacity-20 rounded-lg p-4">
+              <div className="text-3xl mb-2">🤖</div>
+              <div className="font-semibold text-gray-900">AI 예측</div>
+              <div className="text-gray-800 text-sm">GPT 기반 투자 분석 및 리스크 평가</div>
+            </div>
+          </div>
+
+          <Link 
+            href="/ai-search" 
+            className="bg-white text-purple-600 px-6 py-3 rounded-lg hover:bg-purple-50 transition-colors inline-block font-semibold"
+          >
+            AI 기반 프로젝트 검색하기 →
+          </Link>
+        </div>
       </div>
+
+      {/* 실시간 계산 모드 장점 섹션 */}
+      <div className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-lg p-6">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-2">🧮 지능형 실시간 계산 시스템</h2>
+          <p className="text-white mb-4">
+            블록체인 없이도 실제 시장 데이터를 기반으로 정확한 투자 분석을 제공합니다
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div className="bg-white bg-opacity-20 rounded-lg p-4">
+              <div className="text-3xl mb-2">⚡</div>
+              <div className="font-semibold text-gray-900">빠른 응답</div>
+              <div className="text-gray-800 text-sm">블록체인 대기 시간 없이 즉시 계산</div>
+            </div>
+            <div className="bg-white bg-opacity-20 rounded-lg p-4">
+              <div className="text-3xl mb-2">🎯</div>
+              <div className="font-semibold text-gray-900">정확한 분석</div>
+              <div className="text-gray-800 text-sm">실제 경제 지표 기반 동적 계산</div>
+            </div>
+            <div className="bg-white bg-opacity-20 rounded-lg p-4">
+              <div className="text-3xl mb-2">🔄</div>
+              <div className="font-semibold text-gray-900">실시간 업데이트</div>
+              <div className="text-gray-800 text-sm">시장 변화에 따른 자동 재계산</div>
+            </div>
+          </div>
+
+          <div className="text-sm text-blue-100">
+            💡 현재 실시간 계산 모드로 동작 중 - 모든 기능이 정상적으로 작동합니다
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 }
