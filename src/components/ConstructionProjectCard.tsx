@@ -427,3 +427,4 @@ export default function ConstructionProjectCard({ project, onInvest }: Construct
 }
 
 
+
