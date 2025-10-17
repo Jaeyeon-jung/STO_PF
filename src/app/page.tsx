@@ -19,9 +19,9 @@ export default function Home() {
               <div className="text-gray-800 text-sm">대규모 개발사업을 소액 투자로</div>
             </div>
             <div className="bg-white bg-opacity-20 rounded-lg p-4">
-              <div className="text-3xl mb-2">📈</div>
-              <div className="font-semibold text-gray-900">5배 레버리지</div>
-              <div className="text-gray-800 text-sm">자기자본 20% + PF대출 80%</div>
+              <div className="text-3xl mb-2">💰</div>
+              <div className="font-semibold text-gray-900">소액으로 대형 투자</div>
+              <div className="text-gray-800 text-sm">1만원부터 수백억 프로젝트 참여</div>
             </div>
             <div className="bg-white bg-opacity-20 rounded-lg p-4">
               <div className="text-3xl mb-2">💎</div>

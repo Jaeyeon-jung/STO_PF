@@ -107,10 +107,17 @@ export async function POST(request: NextRequest) {
 - 기본 가격: ${projectData.basePrice} ETH
 - 총 공급량: ${projectData.totalSupply} tokens
 
-[체인링크 데이터]
-- ETH/USD 환율: ${chainlinkData.ethUsdPrice || '데이터 없음'}
+[체인링크 실시간 데이터]
+- ETH/USD 환율: ${chainlinkData.ethUsdPrice || '데이터 없음'} USD
+- BTC/USD 환율: ${chainlinkData.btcUsdPrice || '데이터 없음'} USD
+- GOLD/USD 가격: ${chainlinkData.goldUsdPrice || '데이터 없음'} USD
+- S&P500 지수: ${chainlinkData.sp500Index || '데이터 없음'}
+- EUR/USD 환율: ${chainlinkData.eurUsdRate || '데이터 없음'}
+- KRW/USD 환율: ${chainlinkData.krwUsdRate || '데이터 없음'}
 - 부동산 지수: ${chainlinkData.realEstateIndex || '데이터 없음'}
-- 최근 변동성: ${chainlinkData.volatility || '데이터 없음'}
+- 시장 변동성: ${chainlinkData.volatility || '데이터 없음'}%
+- 데이터 품질: ${chainlinkData.dataQuality || 0}/100
+- 마지막 업데이트: ${chainlinkData.lastUpdated || '알 수 없음'}
 
 [커스텀 메트릭]
 - 지역 수요 지수: ${customMetrics.localDemandIndex}/1000

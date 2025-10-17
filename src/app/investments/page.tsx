@@ -114,7 +114,7 @@ export default function InvestmentsPage() {
         </h1>
         <p className="text-lg text-gray-600 max-w-3xl mx-auto">
           부동산 개발 프로젝트를 토큰화하여 소액으로도 투자할 수 있습니다. 
-          자기자본 20% + PF대출 80% 구조로 높은 레버리지 효과를 경험하세요.
+          전문적인 PF 구조로 안정적이면서도 높은 수익률을 추구합니다.
         </p>
       </div>
 
@@ -359,7 +359,7 @@ export default function InvestmentsPage() {
                 <h4 className="font-semibold mb-2">💡 STO-PF 투자의 장점</h4>
                 <ul className="text-sm space-y-1">
                   <li>• 소액으로도 대규모 부동산 개발사업 참여</li>
-                  <li>• PF 구조로 높은 레버리지 효과</li>
+                  <li>• 전문적인 PF 구조로 안정적인 수익 창출</li>
                   <li>• 블록체인 기반 투명한 수익 분배</li>
                   <li>• 토큰 거래를 통한 유동성 확보</li>
                 </ul>

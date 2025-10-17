@@ -1,6 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { ethers } from 'ethers';
+import { ChainlinkDataProvider, CHAINLINK_FEEDS } from '@/lib/chainlinkIntegration';
+import { useWeb3 } from '@/lib/web3Setup';
 
 type Project = {
   id: string;
@@ -37,10 +40,53 @@ type AIAnalysisResult = {
   };
 };
 
+// 체인링크 데이터 조회 함수 (Web3 훅 사용)
+async function fetchChainlinkData(getChainlinkData: () => Promise<any>) {
+  try {
+    // 실제 체인링크 데이터 조회
+    const realData = await getChainlinkData();
+    
+    console.log('🔗 실제 체인링크 데이터 조회:', realData);
+    return {
+      ethUsdPrice: realData.crypto.ethUsd,
+      btcUsdPrice: realData.crypto.btcUsd,
+      goldUsdPrice: realData.commodities.goldUsd,
+      sp500Index: realData.stocks.sp500,
+      eurUsdRate: realData.forex.eurUsd,
+      krwUsdRate: realData.forex.krwUsd,
+      realEstateIndex: 105.2, // 부동산 지수는 별도 피드 필요
+      volatility: 12.5, // 변동성 계산 필요
+      dataQuality: realData.metadata.dataQuality,
+      lastUpdated: new Date(realData.metadata.timestamp).toISOString()
+    };
+  } catch (error) {
+    console.error('❌ 체인링크 데이터 조회 실패:', error);
+    
+    // 실패 시 모의 데이터 반환
+    console.log('⚠️ 체인링크 조회 실패 - 모의 데이터 사용');
+    const mockChainlinkData = {
+      ethUsdPrice: 2500 + (Math.random() - 0.5) * 100,
+      btcUsdPrice: 45000 + (Math.random() - 0.5) * 2000,
+      goldUsdPrice: 2000 + (Math.random() - 0.5) * 50,
+      sp500Index: 4500 + (Math.random() - 0.5) * 100,
+      eurUsdRate: 1.08 + (Math.random() - 0.5) * 0.02,
+      krwUsdRate: 1300 + (Math.random() - 0.5) * 20,
+      realEstateIndex: 105.2 + (Math.random() - 0.5) * 5,
+      volatility: 12.5 + (Math.random() - 0.5) * 3,
+      dataQuality: 50, // 실패 시 낮은 품질 점수
+      lastUpdated: new Date().toISOString()
+    };
+    
+    console.log('🔗 체인링크 데이터 조회 (모의):', mockChainlinkData);
+    return mockChainlinkData;
+  }
+}
+
 export default function AIEnhancedAnalysis({ project }: { project: Project }) {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [analysisResult, setAnalysisResult] = useState<AIAnalysisResult | null>(null);
+  const { isConnected, isLoading: web3Loading, error: web3Error, connect, getChainlinkData } = useWeb3();
 
   const handleAIAnalysis = async () => {
     setLoading(true);
@@ -54,12 +100,8 @@ export default function AIEnhancedAnalysis({ project }: { project: Project }) {
         totalSupply: project.totalSupply
       };
 
-      // 모의 체인링크 데이터
-      const chainlinkData = {
-        ethUsdPrice: 2500, // ETH/USD 환율
-        realEstateIndex: 105.2, // 부동산 지수
-        volatility: 12.5 // 변동성
-      };
+      // 실제 체인링크 데이터 조회
+      const chainlinkData = await fetchChainlinkData(getChainlinkData);
 
       // 모의 커스텀 메트릭
       const customMetrics = {
@@ -208,13 +250,39 @@ export default function AIEnhancedAnalysis({ project }: { project: Project }) {
                     </p>
                   </div>
                   
-                  <button
-                    onClick={handleAIAnalysis}
-                    disabled={loading}
-                    className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-3 rounded-lg hover:from-purple-700 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
-                  >
-                    {loading ? '🔄 AI 분석 중...' : '🚀 AI 분석 시작'}
-                  </button>
+                  {!isConnected ? (
+                    <div className="space-y-4">
+                      <div className="text-center">
+                        <div className="text-4xl mb-2">🔗</div>
+                        <h3 className="text-lg font-semibold mb-2">Web3 연결 필요</h3>
+                        <p className="text-gray-600 mb-4">
+                          실제 체인링크 데이터를 사용하려면 MetaMask를 연결해주세요.
+                        </p>
+                      </div>
+                      <button
+                        onClick={connect}
+                        disabled={web3Loading}
+                        className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-8 py-3 rounded-lg hover:from-orange-600 hover:to-red-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                      >
+                        {web3Loading ? '🔄 연결 중...' : '🔗 MetaMask 연결'}
+                      </button>
+                      <button
+                        onClick={handleAIAnalysis}
+                        disabled={loading}
+                        className="bg-gradient-to-r from-gray-500 to-gray-600 text-white px-8 py-3 rounded-lg hover:from-gray-600 hover:to-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                      >
+                        {loading ? '🔄 AI 분석 중...' : '📊 모의 데이터로 분석'}
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={handleAIAnalysis}
+                      disabled={loading}
+                      className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-3 rounded-lg hover:from-purple-700 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                    >
+                      {loading ? '🔄 AI 분석 중...' : '🚀 실제 데이터로 AI 분석'}
+                    </button>
+                  )}
                 </div>
               )}
 

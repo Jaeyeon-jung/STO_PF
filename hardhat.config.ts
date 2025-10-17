@@ -39,6 +39,12 @@ const config: HardhatUserConfig = {
       url: "http://127.0.0.1:8545",
       chainId: 31337
     },
+    sepolia: {
+      url: process.env.SEPOLIA_RPC_URL || "https://sepolia.infura.io/v3/YOUR_INFURA_KEY",
+      accounts: [process.env.PRIVATE_KEY],
+      chainId: 11155111,
+      gasPrice: 20000000000, // 20 gwei
+    },
     amoy: {
       url: "https://rpc-amoy.polygon.technology",
       accounts: [process.env.PRIVATE_KEY],
